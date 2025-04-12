@@ -1,4 +1,3 @@
-
 const React = require('react');
 const { createRoot } = require('react-dom/client');
 
@@ -11,14 +10,22 @@ const handleDomo = (e, onDomoAdded) => {
 
   const name = document.querySelector('#domoName').value;
   const age = document.querySelector('#domoAge').value;
+  const level = document.querySelector('#domoLevel').value;
 
-  if (name === '' || age === '') {
+  if (name === '' || age === '' || level === '') {
     helper.handleError('All fields are required');
     return false;
   }
 
-  helper.sendPost(e.target.action, { name, age }, onDomoAdded);
+  helper.sendRequest(e.target.action, { name, age, level }, 'POST', onDomoAdded);
   return false;
+};
+
+const deleteDomo = (e, name, callback) => {
+  e.preventDefault();
+  helper.hideError();
+
+  helper.sendRequest('/domo', { name }, 'DELETE', callback);
 };
 
 const DomoForm = (props) => (
@@ -64,6 +71,8 @@ const DomoList = (props) => {
       <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
       <h3 className="domoName">Name: {domo.name}</h3>
       <h3 className="domoAge">Age: {domo.age}</h3>
+      <h3 className="domoAge">Level: {domo.level}</h3>
+      <button className="delete-button" onClick={(e) => deleteDomo(e, domo.name, props.triggerReload)}>Delete</button>
     </div>
   ));
 
@@ -83,7 +92,7 @@ const App = () => {
         <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
       </div>
       <div id="domoList">
-        <DomoList domos={[]} reloadDomos={reloadDomos} />
+        <DomoList domos={[]} reloadDomos={reloadDomos} triggerReload={() => setReloadDomos(!reloadDomos)} />
       </div>
     </div>
   );

@@ -3,6 +3,11 @@
     "airbnb/base",
     "plugin:react/recommended",
   ],
+  "ignorePatterns": [
+    "node_modules/",
+    "client/",
+    "*.jsx"
+  ],
   "rules": {
     "no-underscore-dangle": "off",
     "no-plusplus": "off",

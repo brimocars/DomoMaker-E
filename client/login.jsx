@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const React = require('react');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { createRoot } = require('react-dom/client');
 const helper = require('./helper');
 
@@ -14,7 +16,7 @@ const handleLogin = (e) => {
     return false;
   }
 
-  helper.sendPost(e.target.action, { username, pass });
+  helper.sendRequest(e.target.action, { username, pass }, 'POST');
   return false;
 };
 
@@ -35,7 +37,7 @@ const handleSignup = (e) => {
     return false;
   }
 
-  helper.sendPost(e.target.action, { username, pass, pass2 });
+  helper.sendRequest(e.target.action, { username, pass, pass2 }, 'POST');
   return false;
 };
 
